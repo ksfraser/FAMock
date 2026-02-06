@@ -108,3 +108,10 @@ namespace {
 		}
 	}
 }
+
+if (!function_exists('db_fetch_assoc')) {
+function db_fetch_assoc($res) {
+// Alias for db_fetch in FA - returns associative array
+return db_fetch($res);
+}
+}
