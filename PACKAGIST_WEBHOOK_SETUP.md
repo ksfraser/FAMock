@@ -28,9 +28,9 @@ This repository includes a GitHub Actions workflow (`.github/workflows/packagist
    - Go to the "Actions" tab in your GitHub repository
    - Check that the "Update Packagist" workflow ran successfully
 
-## Option 2: Manual Webhook (Traditional Method)
+## Option 2: Manual Webhook (Alternative Method)
 
-Alternatively, you can set up a webhook directly in GitHub settings.
+⚠️ **Security Warning:** This method exposes your API token in the webhook URL, which creates audit trail risks and makes token rotation more difficult. **Only use this method if GitHub Actions (Option 1) is not available.**
 
 ### Setup Steps:
 
@@ -64,8 +64,8 @@ Alternatively, you can set up a webhook directly in GitHub settings.
 
 - **Security:** Keep your API token private. Never commit it directly to the repository.
 - **Option 1 vs Option 2:** 
-  - GitHub Actions (Option 1) is recommended as it's version-controlled and easier to manage
-  - Manual Webhook (Option 2) works without requiring repository secrets but exposes your token in the URL
+  - **GitHub Actions (Option 1) is strongly recommended** as it's version-controlled, easier to manage, and more secure
+  - Manual Webhook (Option 2) should only be used when GitHub Actions is not available, as it exposes your token in the URL
 - The webhook/action only triggers on pushes to the repository, ensuring Packagist is always up-to-date
 - For releases, both methods work, but the GitHub Actions workflow explicitly handles the `release` event
 
