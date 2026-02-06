@@ -110,4 +110,8 @@ To publish to Packagist:
 
 Once published, users can install with: `composer require ksfraser/famock --dev`
 
+### Automatic Packagist Updates
+
+This repository is configured to automatically notify Packagist when commits are pushed. See [PACKAGIST_WEBHOOK_SETUP.md](PACKAGIST_WEBHOOK_SETUP.md) for setup instructions.
+
 **Current Status:** FAMock is ready for publishing but currently uses local path installation for development.
