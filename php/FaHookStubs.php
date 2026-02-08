@@ -25,6 +25,34 @@ namespace {
             }
             return $GLOBALS['mock_fa_hooks'];
         }
+    // Global Hook System Functions (for direct use in tests)
+    if (!function_exists('add_filter')) {
+        function add_filter($filter_name, $callback, $priority = 10) {
+            // Mock FA add_filter - register a test filter
+            static $test_filters = [];
+            
+            if (!isset($test_filters[$filter_name])) {
+                $test_filters[$filter_name] = [];
+            }
+            
+            $test_filters[$filter_name][] = $callback;
+        }
+    }
+
+    if (!function_exists('apply_filters')) {
+        function apply_filters($filter_name, $value) {
+            // Mock FA apply_filters - in real FA this would call registered filter functions
+            // For testing, we'll return the value unchanged unless specific test filters are registered
+            static $test_filters = [];
+            
+            if (isset($test_filters[$filter_name])) {
+                foreach ($test_filters[$filter_name] as $callback) {
+                    $value = call_user_func($callback, $value);
+                }
+            }
+            
+            return $value;
+        }
     }
 
     // Global Variables
