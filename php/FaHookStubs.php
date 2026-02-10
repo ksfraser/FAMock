@@ -3,6 +3,10 @@
 namespace {
     $GLOBALS['__fa_hook_stubs_loaded'] = true;
 
+    if (!isset($GLOBALS['__fa_test_filters'])) {
+        $GLOBALS['__fa_test_filters'] = [];
+    }
+
     // Hook System Functions
     if (!function_exists('fa_hooks')) {
         function fa_hooks() {
@@ -25,28 +29,30 @@ namespace {
             }
             return $GLOBALS['mock_fa_hooks'];
         }
+    }
+
     // Global Hook System Functions (for direct use in tests)
     if (!function_exists('add_filter')) {
-        function add_filter($filter_name, $callback, $priority = 10) {
+        function add_filter($filterName, $callback, $priority = 10) {
             // Mock FA add_filter - register a test filter
-            static $test_filters = [];
-            
-            if (!isset($test_filters[$filter_name])) {
-                $test_filters[$filter_name] = [];
+            $key = (string)$filterName;
+
+            if (!isset($GLOBALS['__fa_test_filters'][$key])) {
+                $GLOBALS['__fa_test_filters'][$key] = [];
             }
-            
-            $test_filters[$filter_name][] = $callback;
+
+            $GLOBALS['__fa_test_filters'][$key][] = $callback;
         }
     }
 
     if (!function_exists('apply_filters')) {
-        function apply_filters($filter_name, $value) {
+        function apply_filters($filterName, $value) {
             // Mock FA apply_filters - in real FA this would call registered filter functions
             // For testing, we'll return the value unchanged unless specific test filters are registered
-            static $test_filters = [];
-            
-            if (isset($test_filters[$filter_name])) {
-                foreach ($test_filters[$filter_name] as $callback) {
+            $key = (string)$filterName;
+
+            if (isset($GLOBALS['__fa_test_filters'][$key])) {
+                foreach ($GLOBALS['__fa_test_filters'][$key] as $callback) {
                     $value = call_user_func($callback, $value);
                 }
             }
