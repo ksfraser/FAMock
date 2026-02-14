@@ -17,12 +17,13 @@ namespace {
 	}
 
 	if (!function_exists('db_query')) {
-		function db_query(string $sql) {
+		function db_query(string $sql, $error = null) {
 			$GLOBALS['__fa_last_sql'] = $sql;
 			$GLOBALS['__fa_last_update_matched'] = false;
 			if (stripos($sql, 'INSERT') === 0) {
 				if (preg_match("/VALUES\s*\('([^']*)',\s*'([^']*)'\)/", $sql, $m)) {
 					$GLOBALS['__fa_table'][] = ['pref_name' => stripslashes($m[1]), 'pref_value' => stripslashes($m[2])];
+					$GLOBALS['__fa_last_insert_id'] = count($GLOBALS['__fa_table']);
 				}
 				$GLOBALS['__fa_result_set'] = [];
 				$GLOBALS['__fa_result_pos'] = [];
@@ -62,10 +63,24 @@ namespace {
 			// For SELECT and other queries we don't explicitly emulate, reset any cached
 			// cursor state so repeated queries behave like fresh result resources.
 			if (stripos($sql, 'SELECT') === 0) {
+				if (stripos($sql, 'FROM test_table') !== false) {
+					$GLOBALS['__fa_result_set'][$sql] = [
+						['id' => 1, 'name' => 'Test Item'],
+						['id' => 2, 'name' => 'Another Item'],
+					];
+					$GLOBALS['__fa_result_pos'][$sql] = 0;
+					return $sql;
+				}
 				unset($GLOBALS['__fa_result_set'][$sql], $GLOBALS['__fa_result_pos'][$sql]);
 			}
 
 			return $sql;
+		}
+	}
+
+	if (!function_exists('db_insert_id')) {
+		function db_insert_id(): int {
+			return (int)($GLOBALS['__fa_last_insert_id'] ?? 0);
 		}
 	}
 
