@@ -163,4 +163,73 @@ namespace {
             echo '</body></html>';
         }
     }
-}
+
+    // Form/Input Functions
+    if (!function_exists('get_post')) {
+        function get_post(string $name, $default = null) {
+            // Mock - checks $_POST
+            return $_POST[$name] ?? $default;
+        }
+    }
+
+    if (!function_exists('hidden')) {
+        function hidden(string $name, $value): void {
+            // Mock - record values for tests that assert hidden field side effects.
+            if (!isset($GLOBALS['hidden_fields']) || !is_array($GLOBALS['hidden_fields'])) {
+                $GLOBALS['hidden_fields'] = [];
+            }
+            $GLOBALS['hidden_fields'][$name] = $value;
+        }
+    }
+
+    if (!function_exists('text_input')) {
+        function text_input(string $name, $value = '', int $size = 0, string $max = '', string $title = ''): string {
+            // Mock - returns empty input for development
+            return "<input type='text' name='$name' value='$value' />";
+        }
+    }
+
+    if (!function_exists('submit')) {
+        function submit(string $name, string $value, bool $echo = true, string $title = '', string $atype = ''): string {
+            $html = "<input type='submit' name='$name' value='$value' title='$title' />";
+            if ($echo) {
+                echo $html;
+                return '';
+            }
+            return $html;
+        }
+    }
+
+    // Display Functions
+    if (!function_exists('display_notification')) {
+        function display_notification(string $msg, int $type = 0): void {
+            // Mock - actual implementation in FrontAccounting
+        }
+    }
+
+    if (!function_exists('display_error')) {
+        function display_error(string $msg): void {
+            // Mock - actual implementation in FrontAccounting
+        }
+    }
+
+    if (!function_exists('display_warning')) {
+        function display_warning(string $msg): void {
+            // Mock - actual implementation in FrontAccounting
+        }
+    }
+
+    // List Functions
+    if (!function_exists('supplier_list')) {
+        function supplier_list(string $name, $selected_id = null, bool $spec_option = false, bool $submit_on_change = false): string {
+            // Mock - returns empty select for development
+            return "<select name='$name'></select>";
+        }
+    }
+
+    if (!function_exists('customer_list')) {
+        function customer_list(string $name, $selected_id = null, bool $spec_option = false, bool $submit_on_change = false): string {
+            // Mock - returns empty select for development
+            return "<select name='$name'></select>";
+        }
+    }

@@ -16,4 +16,17 @@ namespace {
             // Mock - do nothing in tests
         }
     }
-}
+
+    if (!function_exists('has_access')) {
+        function has_access($access, string $securityArea): bool {
+            // Mock - always return true for testing
+            return true;
+        }
+    }
+
+    if (!function_exists('get_user')) {
+        function get_user(): int {
+            // Mock - return dummy user ID for testing
+            return 1;
+        }
+    }

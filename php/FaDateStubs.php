@@ -25,4 +25,25 @@ namespace {
             return true;
         }
     }
-}
+
+    if (!function_exists('new_doc_date')) {
+        function new_doc_date(): string {
+            return date('Y-m-d');
+        }
+    }
+
+    if (!function_exists('sql2date')) {
+        function sql2date(string $date): string {
+            return $date;
+        }
+    }
+
+    if (!function_exists('add_days')) {
+        function add_days(string $date, int $days): string {
+            $timestamp = strtotime($date);
+            if ($timestamp === false) {
+                return $date;
+            }
+            return date('Y-m-d', strtotime("+$days days", $timestamp));
+        }
+    }
