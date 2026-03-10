@@ -176,34 +176,6 @@ namespace {
         }
     }
 
-    if (!function_exists('set_bank_partner_data')) {
-        function set_bank_partner_data($from_bank_id, $partner_type = 4, $to_bank_id, $data) {
-            // Mock - always succeed
-            return true;
-        }
-    }
-
-    if (!function_exists('update_transactions')) {
-        function update_transactions($tid, $cids, $status, $trans_no, $trans_type, $matched = 0, $created = 0, $g_partner = null, $g_option = "") {
-            // Mock - always succeed
-            return true;
-        }
-    }
-
-    if (!function_exists('get_trans_counterparty')) {
-        function get_trans_counterparty($trans_no, $trans_type) {
-            // Mock counterparty data - return array of GL transactions
-            return [
-                [
-                    'account' => '1000',
-                    'person_id' => 1,
-                    'person_type_id' => 2, // customer
-                    'memo' => 'Test transaction'
-                ]
-            ];
-        }
-    }
-
     // Mock FrontAccounting classes
     if (!class_exists('fa_bank_transfer')) {
         class fa_bank_transfer {
