@@ -19,6 +19,12 @@ namespace {
 
 	if (!function_exists('set_company_pref')) {
 		function set_company_pref(string $name, $value): void {
+			// Check for test-specific global first (backwards compatibility)
+			global $_test_company_prefs;
+			if (isset($_test_company_prefs)) {
+				$_test_company_prefs[$name] = $value;
+				return;
+			}
 			$GLOBALS['__fa_prefs'][$name] = $value;
 		}
 	}

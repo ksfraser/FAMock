@@ -6,6 +6,11 @@ namespace {
     // Session/Company Functions
     if (!function_exists('get_company_pref')) {
         function get_company_pref($name) {
+            // Check for test-specific global first (backwards compatibility)
+            global $_test_company_prefs;
+            if (isset($_test_company_prefs)) {
+                return $_test_company_prefs[$name] ?? null;
+            }
             // Mock - return default values
             return null;
         }

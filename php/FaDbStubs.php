@@ -125,6 +125,11 @@ namespace {
 
 	if (!function_exists('db_affected_rows')) {
 		function db_affected_rows() {
+			// Check for test-specific global first (backwards compatibility)
+			global $_test_db_affected_rows;
+			if (isset($_test_db_affected_rows)) {
+				return (int)$_test_db_affected_rows;
+			}
 			return $GLOBALS['__fa_last_update_matched'] ? 1 : 0;
 		}
 	}
