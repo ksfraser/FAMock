@@ -16,4 +16,10 @@ namespace {
 			}
 		}
 	}
+
+	if (!function_exists('set_company_pref')) {
+		function set_company_pref(string $name, $value): void {
+			$GLOBALS['__fa_prefs'][$name] = $value;
+		}
+	}
 }

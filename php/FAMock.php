@@ -16,3 +16,4 @@ require_once __DIR__ . '/FaHookStubs.php';
 require_once __DIR__ . '/FaSecurityStubs.php';
 require_once __DIR__ . '/FaSessionStubs.php';
 require_once __DIR__ . '/FaUpdateOnlyStubs.php';
+require_once __DIR__ . '/FaDateStubs.php';

@@ -123,10 +123,16 @@ namespace {
 		}
 	}
 
-	if (!function_exists('db_fetch_assoc')) {
-	function db_fetch_assoc($res) {
-	// Alias for db_fetch in FA - returns associative array
-	return db_fetch($res);
+	if (!function_exists('db_affected_rows')) {
+		function db_affected_rows() {
+			return $GLOBALS['__fa_last_update_matched'] ? 1 : 0;
+		}
 	}
+
+	if (!function_exists('db_fetch_assoc')) {
+		function db_fetch_assoc($res) {
+			// Alias for db_fetch in FA - returns associative array
+			return db_fetch($res);
+		}
 	}
 }
