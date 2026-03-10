@@ -233,3 +233,78 @@ namespace {
             return "<select name='$name'></select>";
         }
     }
+    // Additional UI Functions
+    if (!function_exists('list_updated')) {
+        function list_updated(string $name): bool {
+            return false;
+        }
+    }
+
+    if (!function_exists('get_branch')) {
+        function get_branch($branch_code): array {
+            return [];
+        }
+    }
+
+    if (!function_exists('set_focus')) {
+        function set_focus(string $name): void {
+            // No-op in mock
+        }
+    }
+
+    if (!function_exists('supplier_list_row')) {
+        function supplier_list_row(string $label, string $name, $selected_id = null, bool $spec_option = false, bool $submit_on_change = false): void {
+            // Mock - output basic HTML structure
+            echo "<tr><td>$label</td><td><select name='$name'></select></td></tr>";
+        }
+    }
+
+    if (!function_exists('customer_list_row')) {
+        function customer_list_row(string $label, string $name, $selected_id = null, bool $spec_option = false, bool $submit_on_change = false): void {
+            // Mock - output basic HTML structure
+            echo "<tr><td>$label</td><td><select name='$name'></select></td></tr>";
+        }
+    }
+
+    if (!function_exists('customer_branches_list_row')) {
+        function customer_branches_list_row(string $label, $customer_id, string $name, $selected_id = null, bool $spec_option = false, bool $enabled = true, bool $submit_on_change = false): void {
+            // Mock - output basic HTML structure
+            echo "<tr><td>$label</td><td><select name='$name'></select></td></tr>";
+        }
+    }
+
+    if (!function_exists('textarea_row')) {
+        function textarea_row(string $label, string $name, string $value = '', int $rows = 5, int $cols = 40, string $title = ''): void {
+            // Mock - output basic HTML structure
+            echo "<tr><td>$label</td><td><textarea name='$name' rows='$rows' cols='$cols'>$value</textarea></td></tr>";
+        }
+    }
+
+    if (!function_exists('label_row')) {
+        function label_row(string $label, $value, string $params = ''): void {
+            // Mock - output basic HTML structure
+            echo "<tr><td class='label'>$label</td><td>$value</td></tr>";
+        }
+    }
+
+    if (!function_exists('submit_cells')) {
+        function submit_cells(string $name, string $value, string $params = ''): void {
+            // Mock - output basic HTML structure
+            echo "<td><input type='submit' name='$name' value='$value'></td>";
+        }
+    }
+
+    if (!function_exists('submit_center_first')) {
+        function submit_center_first(string $name, string $value, string $params = ''): void {
+            // Mock - output basic HTML structure
+            echo "<tr><td colspan='2' align='center'><input type='submit' name='$name' value='$value'></td></tr>";
+        }
+    }
+
+    if (!function_exists('label_cell')) {
+        function label_cell(string $label, string $params = ''): void {
+            // Mock - output basic HTML structure
+            echo "<td>$label</td>";
+        }
+    }
+}

@@ -12,6 +12,7 @@
 // Load all stub files
 require_once __DIR__ . '/FaDbStubs.php';
 require_once __DIR__ . '/FaUIStubs.php';
+require_once __DIR__ . '/FaBusinessStubs.php';
 require_once __DIR__ . '/FaHookStubs.php';
 require_once __DIR__ . '/FaSecurityStubs.php';
 require_once __DIR__ . '/FaSessionStubs.php';
