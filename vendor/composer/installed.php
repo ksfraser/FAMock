@@ -1,8 +1,8 @@
 <?php return array(
     'root' => array(
         'name' => 'ksfraser/famock',
-        'pretty_version' => '0.3.0',
-        'version' => '0.3.0.0',
+        'pretty_version' => '0.4.1',
+        'version' => '0.4.1.0',
         'reference' => null,
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
@@ -20,8 +20,8 @@
             'dev_requirement' => true,
         ),
         'ksfraser/famock' => array(
-            'pretty_version' => '0.3.0',
-            'version' => '0.3.0.0',
+            'pretty_version' => '0.4.1',
+            'version' => '0.4.1.0',
             'reference' => null,
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
