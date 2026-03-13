@@ -52,7 +52,7 @@ namespace {
 					$k = stripslashes($m[1]);
 					$GLOBALS['__fa_table'] = array_values(array_filter(
 						$GLOBALS['__fa_table'],
-						fn($r) => (string)($r['pref_name'] ?? '') !== $k
+						function($r) use ($k) { return (string)($r['pref_name'] ?? '') !== $k; }
 					));
 				}
 				$GLOBALS['__fa_result_set'] = [];
@@ -96,17 +96,17 @@ namespace {
 
 				if (preg_match("/WHERE\s+[^=]+\s*=\s*'([^']*)'/", $sql, $m)) {
 					$k = stripslashes($m[1]);
-					$rows = array_values(array_filter($rows, fn($r) => (string)($r['pref_name'] ?? '') === $k));
+					$rows = array_values(array_filter($rows, function($r) use ($k) { return (string)($r['pref_name'] ?? '') === $k; }));
 				} elseif (preg_match("/LIKE\s*'([^']*)'/", $sql, $m)) {
 					$like = stripslashes($m[1]);
 					$prefix = rtrim($like, '%');
-					$rows = array_values(array_filter($rows, fn($r) => strncmp((string)($r['pref_name'] ?? ''), $prefix, strlen($prefix)) === 0));
+					$rows = array_values(array_filter($rows, function($r) use ($prefix) { return strncmp((string)($r['pref_name'] ?? ''), $prefix, strlen($prefix)) === 0; }));
 				}
 
 				if (preg_match('/SELECT\s+1\s+FROM/i', $sql)) {
-					$rows = array_map(fn() => ['1' => 1], $rows);
+					$rows = array_map(function() { return ['1' => 1]; }, $rows);
 				} elseif (preg_match('/SELECT\s+pref_value\s+FROM/i', $sql)) {
-					$rows = array_map(fn($r) => ['pref_value' => $r['pref_value'] ?? ''], $rows);
+					$rows = array_map(function($r) { return ['pref_value' => $r['pref_value'] ?? '']; }, $rows);
 				}
 
 				$GLOBALS['__fa_result_set'][$sql] = $rows;

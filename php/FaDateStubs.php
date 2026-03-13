@@ -47,3 +47,4 @@ namespace {
             return date('Y-m-d', strtotime("+$days days", $timestamp));
         }
     }
+}

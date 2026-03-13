@@ -30,3 +30,4 @@ namespace {
             return 1;
         }
     }
+}
