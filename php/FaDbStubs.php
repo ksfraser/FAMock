@@ -140,4 +140,12 @@ namespace {
 			return db_fetch($res);
 		}
 	}
+
+	if (!function_exists('db_num_rows')) {
+		function db_num_rows($res): int {
+			$sql = (string)$res;
+			$rows = $GLOBALS['__fa_result_set'][$sql] ?? [];
+			return count($rows);
+		}
+	}
 }
