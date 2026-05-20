@@ -43,41 +43,13 @@ namespace {
     // ==========================================
     // TRANSACTION TYPES AND STATUS CODES
     // ==========================================
-    // Sales transactions
-    if (!defined('ST_SALESINVOICE')) {
-        define('ST_SALESINVOICE', 0);            // 0  = Sales Invoice
+    // ==========================================
+    // TRANSACTION TYPES (as defined in FA config.php)
+    // ==========================================
+    if (!defined('ST_JOURNAL')) {
+        define('ST_JOURNAL', 0);                 // 0  = Journal Entry
     }
 
-    if (!defined('ST_CUSTCREDIT')) {
-        define('ST_CUSTCREDIT', 1);              // 1  = Customer Credit Note
-    }
-
-    if (!defined('ST_CUSTPAYMENT')) {
-        define('ST_CUSTPAYMENT', 2);             // 2  = Customer Payment
-    }
-
-    if (!defined('ST_CUSTDELIVERY')) {
-        define('ST_CUSTDELIVERY', 13);           // 13 = Customer Delivery
-    }
-
-    // Purchasing transactions
-    if (!defined('ST_SUPPINVOICE')) {
-        define('ST_SUPPINVOICE', 20);            // 20 = Supplier Invoice
-    }
-
-    if (!defined('ST_SUPPCREDIT')) {
-        define('ST_SUPPCREDIT', 21);             // 21 = Supplier Credit Note
-    }
-
-    if (!defined('ST_SUPPAYMENT')) {
-        define('ST_SUPPAYMENT', 22);             // 22 = Supplier Payment
-    }
-
-    if (!defined('ST_SUPPRECEIVE')) {
-        define('ST_SUPPRECEIVE', 25);            // 25 = Supplier Receive
-    }
-
-    // Bank transactions
     if (!defined('ST_BANKPAYMENT')) {
         define('ST_BANKPAYMENT', 1);             // 1  = Bank Payment
     }
@@ -90,41 +62,70 @@ namespace {
         define('ST_BANKTRANSFER', 4);            // 4  = Bank Transfer
     }
 
-    // Journal/General Ledger transactions
-    if (!defined('ST_JOURNAL')) {
-        define('ST_JOURNAL', 0);                 // 0  = Journal Entry
+    // Sales transactions
+    if (!defined('ST_SALESINVOICE')) {
+        define('ST_SALESINVOICE', 10);           // 10 = Sales Invoice
     }
 
-    if (!defined('ST_MEMO')) {
-        define('ST_MEMO', 11);                   // 11 = Memo (non-financial note)
+    if (!defined('ST_CUSTCREDIT')) {
+        define('ST_CUSTCREDIT', 11);             // 11 = Customer Credit Note
     }
 
-    if (!defined('ST_INVADJUST')) {
-        define('ST_INVADJUST', 16);              // 16 = Inventory Adjustment
+    if (!defined('ST_CUSTPAYMENT')) {
+        define('ST_CUSTPAYMENT', 12);            // 12 = Customer Payment
     }
 
-    if (!defined('ST_LOCTRANSFER')) {
-        define('ST_LOCTRANSFER', 17);            // 17 = Location Transfer
-    }
-
-    if (!defined('ST_MANUISSUE')) {
-        define('ST_MANUISSUE', 18);              // 18 = Manual Issue
-    }
-
-    if (!defined('ST_MANURECEIVE')) {
-        define('ST_MANURECEIVE', 19);            // 19 = Manual Receive
-    }
-
-    if (!defined('ST_PURCHORDER')) {
-        define('ST_PURCHORDER', 24);             // 24 = Purchase Order
+    if (!defined('ST_CUSTDELIVERY')) {
+        define('ST_CUSTDELIVERY', 13);           // 13 = Customer Delivery
     }
 
     if (!defined('ST_SALESQUOTE')) {
-        define('ST_SALESQUOTE', 32);             // 32 = Sales Quote
+        define('ST_SALESQUOTE', 14);             // 14 = Sales Quote
     }
 
     if (!defined('ST_SALESORDER')) {
-        define('ST_SALESORDER', 30);             // 30 = Sales Order
+        define('ST_SALESORDER', 15);             // 15 = Sales Order
+    }
+
+    if (!defined('ST_MEMO')) {
+        define('ST_MEMO', 16);                   // 16 = Memo (non-financial note)
+    }
+
+    if (!defined('ST_INVADJUST')) {
+        define('ST_INVADJUST', 17);              // 17 = Inventory Adjustment
+    }
+
+    if (!defined('ST_LOCTRANSFER')) {
+        define('ST_LOCTRANSFER', 18);            // 18 = Location Transfer
+    }
+
+    if (!defined('ST_MANUISSUE')) {
+        define('ST_MANUISSUE', 19);              // 19 = Manual Issue
+    }
+
+    if (!defined('ST_MANURECEIVE')) {
+        define('ST_MANURECEIVE', 20);            // 20 = Manual Receive
+    }
+
+    // Purchasing transactions
+    if (!defined('ST_SUPPINVOICE')) {
+        define('ST_SUPPINVOICE', 25);            // 25 = Supplier Invoice
+    }
+
+    if (!defined('ST_SUPPCREDIT')) {
+        define('ST_SUPPCREDIT', 26);             // 26 = Supplier Credit Note
+    }
+
+    if (!defined('ST_SUPPAYMENT')) {
+        define('ST_SUPPAYMENT', 27);             // 27 = Supplier Payment
+    }
+
+    if (!defined('ST_SUPPRECEIVE')) {
+        define('ST_SUPPRECEIVE', 28);            // 28 = Supplier Receive
+    }
+
+    if (!defined('ST_PURCHORDER')) {
+        define('ST_PURCHORDER', 29);             // 29 = Purchase Order
     }
 
     if (!defined('ST_WORKORDER')) {
