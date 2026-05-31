@@ -18,15 +18,15 @@ namespace {
                 return true;
             }
 
-            public function activate_extension()
-            {
-                return true;
-            }
+    public function activate_extension($company, $check_only = true)
+    {
+        return true;
+    }
 
-            public function deactivate_extension()
-            {
-                return true;
-            }
+    public function deactivate_extension($company)
+    {
+        return true;
+    }
         }
     }
 }
