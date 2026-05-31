@@ -20,3 +20,4 @@ require_once __DIR__ . '/FaSessionStubs.php';
 require_once __DIR__ . '/FaUpdateOnlyStubs.php';
 require_once __DIR__ . '/FaDateStubs.php';
 require_once __DIR__ . '/FaHooksBaseStubs.php';
+require_once __DIR__ . '/FaHooksBaseStubs.php';
