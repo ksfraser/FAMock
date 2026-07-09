@@ -305,6 +305,194 @@ namespace {
             }
         }
     }
+
+    // ==========================================
+    // Payment / Transaction Functions
+    // ==========================================
+    if (!function_exists('begin_transaction')) {
+        function begin_transaction(): void {}
+    }
+
+    if (!function_exists('commit_transaction')) {
+        function commit_transaction(): void {}
+    }
+
+    if (!function_exists('hook_db_prewrite')) {
+        function hook_db_prewrite($obj, $trans_type): void {}
+    }
+
+    if (!function_exists('hook_db_postwrite')) {
+        function hook_db_postwrite($obj, $trans_type): void {}
+    }
+
+    if (!function_exists('delete_comments')) {
+        function delete_comments(int $type, int $typeNo): bool {
+            return true;
+        }
+    }
+
+    if (!function_exists('void_bank_trans')) {
+        function void_bank_trans(int $type, int $transNo, bool $isEditing = true): void {}
+    }
+
+    if (!function_exists('get_exchange_rate_from_to')) {
+        function get_exchange_rate_from_to(string $from, string $to, string $date): float {
+            $rates = [
+                'USD_CAD' => 1.30,
+                'CAD_USD' => 0.77,
+                'USD_EUR' => 0.85,
+                'EUR_USD' => 1.18,
+                'CAD_EUR' => 0.65,
+                'EUR_CAD' => 1.54,
+            ];
+            $key = "{$from}_{$to}";
+            return $rates[$key] ?? 1.0;
+        }
+    }
+
+    if (!function_exists('get_customer_currency')) {
+        function get_customer_currency(int $customerId): string {
+            return 'CAD';
+        }
+    }
+
+    if (!function_exists('write_customer_trans')) {
+        function write_customer_trans(
+            int $transType, int $transNo, int $customerId, int $branchId,
+            string $date_, string $ref, float $amount, float $discount = 0.0
+        ): int {
+            static $nextId = 100;
+            return $nextId++;
+        }
+    }
+
+    if (!function_exists('add_gl_trans')) {
+        function add_gl_trans(
+            int $type, int $typeNo, string $tranDate, string $account, float $dimensionId,
+            float $dimension2Id, string $memo, float $amount, ?string $personCurrency = null,
+            string $personType = '', int $personId = 0
+        ): float {
+            return $amount;
+        }
+    }
+
+    if (!function_exists('add_gl_trans_customer')) {
+        function add_gl_trans_customer(
+            int $type, int $typeNo, string $tranDate, string $account, float $dimensionId,
+            float $dimension2Id, float $amount, int $customerId, string $errorMsg = ''
+        ): float {
+            return $amount;
+        }
+    }
+
+    if (!function_exists('get_branch_accounts')) {
+        function get_branch_accounts(int $branchId): array {
+            return [
+                'receivables_account' => '1100',
+                'payment_discount_account' => '4205',
+                'sales_account' => '4100',
+                'sales_discount_account' => '4200',
+            ];
+        }
+    }
+
+    if (!function_exists('get_company_pref')) {
+        function get_company_pref(string $name): string {
+            $prefs = [
+                'debtors_act' => '1100',
+                'bank_charge_act' => '4500',
+                'exchange_diff_act' => '4505',
+                'default_sales_discount_act' => '4200',
+                'default_prompt_payment_act' => '4205',
+                'freight_act' => '4600',
+                'curr_default' => 'CAD',
+            ];
+            return $prefs[$name] ?? '';
+        }
+    }
+
+    if (!function_exists('get_customer_habit')) {
+        function get_customer_habit(int $customerId): array {
+            return [
+                'dissallow_invoices' => 0,
+                'pymt_discount' => 0.0,
+            ];
+        }
+    }
+
+    if (!function_exists('check_reference')) {
+        function check_reference(string $ref, int $type, int $transNo = 0): bool {
+            return true;
+        }
+    }
+
+    if (!function_exists('check_num')) {
+        function check_num(string $fieldName, float $minValue = 0): bool {
+            return true;
+        }
+    }
+
+    if (!function_exists('db_has_currency_rates')) {
+        function db_has_currency_rates(string $currency, string $date, bool $allowFuture = false): bool {
+            return true;
+        }
+    }
+
+    if (!function_exists('is_date_in_fiscalyear')) {
+        function is_date_in_fiscalyear(string $date): bool {
+            return true;
+        }
+    }
+
+    if (!function_exists('new_doc_date')) {
+        function new_doc_date(?string $date = null): string {
+            return $date ?? date('Y-m-d');
+        }
+    }
+
+    if (!function_exists('get_gl_account')) {
+        function get_gl_account(string $accountCode) {
+            return [
+                'account_code' => $accountCode,
+                'account_name' => 'Test Account',
+            ];
+        }
+    }
+
+    if (!function_exists('get_bank_charge_account')) {
+        function get_bank_charge_account(int $bankAccountId): string {
+            return '4500';
+        }
+    }
+
+    if (!function_exists('write_customer_payment')) {
+        function write_customer_payment(
+            int $transNo, int $customerId, int $branchId, int $bankAccount,
+            string $date_, string $ref, float $amount, float $discount = 0.0,
+            string $memo = '', float $rate = 0.0, float $charge = 0.0,
+            float $bankAmount = 0.0
+        ): int {
+            static $nextId = 200;
+            return $nextId++;
+        }
+    }
+
+    if (!function_exists('get_customer_trans')) {
+        function get_customer_trans(int $transNo, int $transType): array {
+            return [
+                'debtor_no' => 1,
+                'DebtorName' => 'Test Customer',
+                'branch_code' => 1,
+                'bank_act' => 1,
+                'reference' => 'PAY-001',
+                'tran_date' => date('Y-m-d'),
+                'Total' => 100.00,
+                'ov_discount' => 0.0,
+                'bank_amount' => 100.00,
+                'curr_code' => 'CAD',
+            ];
+        }
+    }
 }
 
 // Define functions in specific namespaces
