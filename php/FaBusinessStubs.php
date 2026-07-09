@@ -176,6 +176,104 @@ namespace {
         }
     }
 
+    // Customer / CRM Functions
+    if (!function_exists('add_customer')) {
+        /**
+         * @param string $name
+         * @param string $custRef
+         * @param string $address
+         * @param string $taxId
+         * @param string $currCode
+         * @param int $dimensionId
+         * @param int $dimension2Id
+         * @param int $creditStatus
+         * @param int $paymentTerms
+         * @param float $discount
+         * @param float $pymtDiscount
+         * @param float $creditLimit
+         * @param int $salesType
+         * @param string $notes
+         * @return void
+         */
+        function add_customer(
+            string $name, string $custRef, string $address, string $taxId,
+            string $currCode, int $dimensionId, int $dimension2Id,
+            int $creditStatus, int $paymentTerms, float $discount,
+            float $pymtDiscount, float $creditLimit, int $salesType, string $notes
+        ): void {
+            $GLOBALS['__fa_last_insert_id'] = (int)($GLOBALS['__fa_last_insert_id'] ?? 0) + 1;
+        }
+    }
+
+    if (!function_exists('add_branch')) {
+        /**
+         * @param int $debtorNo
+         * @param string $brName
+         * @param string $branchRef
+         * @param string $brAddress
+         * @param int $salesman
+         * @param int $area
+         * @param int $taxGroupId
+         * @param string $defaultLocation
+         * @param string $salesDiscountAct
+         * @param string $receivablesAct
+         * @param string $promptPaymentAct
+         * @param string $brPostAddress
+         * @param int $disableTrans
+         * @param int $inactive
+         * @param string $defaultShipVia
+         * @param string $notes
+         * @return void
+         */
+        function add_branch(
+            int $debtorNo, string $brName, string $branchRef, string $brAddress,
+            int $salesman, int $area, int $taxGroupId, string $defaultLocation,
+            string $salesDiscountAct, string $receivablesAct, string $promptPaymentAct,
+            string $brPostAddress, int $disableTrans, int $inactive,
+            string $defaultShipVia, string $notes
+        ): void {
+            $GLOBALS['__fa_last_insert_id'] = (int)($GLOBALS['__fa_last_insert_id'] ?? 0) + 1;
+        }
+    }
+
+    if (!function_exists('update_customer')) {
+        function update_customer(
+            int $customerId, string $name, string $custRef, string $address,
+            string $taxId, string $currCode, int $dimensionId, int $dimension2Id,
+            int $creditStatus, int $paymentTerms, float $discount,
+            float $pymtDiscount, float $creditLimit, int $salesType, string $notes
+        ): void {
+            // no-op mock
+        }
+    }
+
+    if (!function_exists('update_record_status')) {
+        function update_record_status(int $id, int $inactive, string $table, string $key): void {
+            // no-op mock
+        }
+    }
+
+    if (!function_exists('get_company_prefs')) {
+        function get_company_prefs(): array {
+            return [
+                'curr_default' => 'CAD',
+                'debtors_act' => '1100',
+                'default_sales_discount_act' => '4200',
+                'default_prompt_payment_act' => '4205',
+                'bank_charge_act' => '4500',
+                'exchange_diff_act' => '4505',
+                'freight_act' => '4600',
+                'default_credit_limit' => 1000.0,
+            ];
+        }
+    }
+
+    if (!function_exists('get_company_currency')) {
+        function get_company_currency(): string {
+            return 'CAD';
+        }
+    }
+
     // Mock FrontAccounting classes
     if (!class_exists('fa_bank_transfer')) {
         class fa_bank_transfer {
