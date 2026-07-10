@@ -477,6 +477,48 @@ namespace {
         }
     }
 
+    if (!function_exists('add_bank_transfer')) {
+        /**
+         * @param int $fromAccount
+         * @param int $toAccount
+         * @param string $date_
+         * @param float $amount
+         * @param string $ref
+         * @param string $memo_
+         * @param float $charge
+         * @param float $targetAmount
+         * @return int
+         */
+        function add_bank_transfer(
+            int $fromAccount, int $toAccount, string $date_, float $amount,
+            string $ref, string $memo_, float $charge = 0.0, float $targetAmount = 0.0
+        ): int {
+            static $nextId = 300;
+            return $nextId++;
+        }
+    }
+
+    if (!function_exists('update_bank_transfer')) {
+        /**
+         * @param int $transNo
+         * @param int $fromAccount
+         * @param int $toAccount
+         * @param string $date_
+         * @param float $amount
+         * @param string $ref
+         * @param string $memo_
+         * @param float $charge
+         * @param float $targetAmount
+         * @return int
+         */
+        function update_bank_transfer(
+            int $transNo, int $fromAccount, int $toAccount, string $date_, float $amount,
+            string $ref, string $memo_, float $charge = 0.0, float $targetAmount = 0.0
+        ): int {
+            return $transNo;
+        }
+    }
+
     if (!function_exists('get_customer_trans')) {
         function get_customer_trans(int $transNo, int $transType): array {
             return [
