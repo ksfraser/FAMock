@@ -1,6 +1,5 @@
 {
     "name": "ksfraser/famock",
-    "version": "0.7.0",
     "description": "FrontAccounting function mocks for unit testing",
     "type": "library",
     "license": "MIT",
