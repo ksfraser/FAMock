@@ -18,16 +18,16 @@
     "autoload": {
         "psr-4": {
             "Ksfraser\\FAMock\\": "php/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Ksfraser\\FAMock\\Tests\\": "tests/"
         },
         "files": [
             "php/FAMock.php",
             "php/TestDbResult.php"
         ]
-    },
-    "autoload-dev": {
-        "psr-4": {
-            "Ksfraser\\FAMock\\Tests\\": "tests/"
-        }
     },
     "extra": {
         "branch-alias": {
