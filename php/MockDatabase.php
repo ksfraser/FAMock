@@ -11,10 +11,11 @@ use Ksfraser\Frontaccounting\GenCat\DatabaseInterface;
  */
 class MockDatabase implements DatabaseInterface
 {
-    private string $tablePrefix;
+    /** @var string */
+    private $tablePrefix;
 
     /** @var array<int, array<string, mixed>> */
-    private array $rows;
+    private $rows;
 
     /**
      * @param array<int, array<string, mixed>> $rows Rows returned by fetch() for any query

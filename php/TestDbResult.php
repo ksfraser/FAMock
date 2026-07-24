@@ -18,10 +18,10 @@
 class TestDbResult
 {
     /** @var array<int, array<string, mixed>> */
-    private array $rows;
+    private $rows;
 
     /** @var int Current position in result set */
-    private int $position = 0;
+    private $position = 0;
 
     /**
      * Create a result set wrapper
