@@ -165,4 +165,16 @@ namespace {
     if (!defined('ANY_NUMERIC')) {
         define('ANY_NUMERIC', 0);                 // Generic numeric placeholder
     }
+
+    if (!function_exists('set_company_pref')) {
+        function set_company_pref(string $name, $value) {
+            $GLOBALS['__fa_company_prefs'][$name] = $value;
+        }
+    }
+
+    if (!function_exists('get_company_pref')) {
+        function get_company_pref(string $name, $default = '') {
+            return $GLOBALS['__fa_company_prefs'][$name] ?? $default;
+        }
+    }
 }
