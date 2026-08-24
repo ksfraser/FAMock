@@ -31,6 +31,25 @@ namespace {
         }
     }
 
+    if (!function_exists('add_lapp_function')) {
+        function add_lapp_function($app, $menu, $label, $link, $id, $priority) {
+            if (!isset($app->menu_items)) {
+                $app->menu_items = [];
+            }
+            $app->menu_items[] = [
+                'label' => $label,
+                'link' => $link,
+                'menu' => $menu,
+            ];
+        }
+    }
+
+    if (!function_exists('add_rapp_function')) {
+        function add_rapp_function($app, $menu, $label, $link, $id, $priority) {
+            add_lapp_function($app, $menu, $label, $link, $id, $priority);
+        }
+    }
+
     // Global Hook System Functions (for direct use in tests)
     if (!function_exists('add_filter')) {
         function add_filter($filterName, $callback, $priority = 10) {
