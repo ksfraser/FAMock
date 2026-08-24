@@ -99,7 +99,12 @@ namespace {
 
     if (!function_exists('submit')) {
         function submit($name, $value, $echo_on_click = true) {
-            echo '<input type="submit" name="' . $name . '" value="' . $value . '">';
+            $html = '<input type="submit" name="' . $name . '" value="' . $value . '">';
+            if ($echo_on_click) {
+                echo $html;
+                return '';
+            }
+            return $html;
         }
     }
 
