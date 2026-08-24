@@ -86,8 +86,21 @@ namespace {
 
 	if (!function_exists('db_fetch')) {
 	function db_fetch($res) {
+		// Handle ArrayIterator directly (e.g., from get_customer_details_all())
 		if ($res instanceof \ArrayIterator) {
-			$res = iterator_to_array($res, true);
+			$current = $res->current();
+			$res->next();
+			return $current;
+		}
+		// If it's an array, return the current item and advance
+		if (is_array($res) && isset($res['__fa_pos']) && isset($res['__fa_rows'])) {
+			$pos = $res['__fa_pos'] ?? 0;
+			$rows = $res['__fa_rows'] ?? [];
+			if ($pos >= count($rows)) {
+				return false;
+			}
+			$res['__fa_pos'] = $pos + 1;
+			return $rows[$pos];
 		}
 		$sql = (string)$res;
 			if (stripos($sql, 'SELECT') !== 0) {
