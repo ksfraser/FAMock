@@ -161,4 +161,8 @@ namespace {
     if (!defined('DIMENSION_TYPE_DEPARTMENT')) {
         define('DIMENSION_TYPE_DEPARTMENT', 3);  // Dimension for departments
     }
+
+    if (!defined('ANY_NUMERIC')) {
+        define('ANY_NUMERIC', 0);                 // Generic numeric placeholder
+    }
 }
