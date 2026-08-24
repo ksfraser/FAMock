@@ -166,6 +166,18 @@ namespace {
         define('ANY_NUMERIC', 0);                 // Generic numeric placeholder
     }
 
+    if (!defined('MENU_IMPORT')) {
+        define('MENU_IMPORT', 'menu_import');
+    }
+
+    if (!defined('MENU_MAINTENANCE')) {
+        define('MENU_MAINTENANCE', 'menu_maintenance');
+    }
+
+    if (!defined('MENU_INQUIRY')) {
+        define('MENU_INQUIRY', 'menu_inquiry');
+    }
+
     if (!function_exists('set_company_pref')) {
         function set_company_pref(string $name, $value) {
             $GLOBALS['__fa_company_prefs'][$name] = $value;
