@@ -85,8 +85,11 @@ namespace {
 	}
 
 	if (!function_exists('db_fetch')) {
-		function db_fetch($res) {
-			$sql = (string)$res;
+	function db_fetch($res) {
+		if ($res instanceof \ArrayIterator) {
+			$res = iterator_to_array($res, true);
+		}
+		$sql = (string)$res;
 			if (stripos($sql, 'SELECT') !== 0) {
 				return false;
 			}
