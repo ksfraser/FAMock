@@ -271,4 +271,15 @@ namespace {
         }
     }
 
+    if (!function_exists('search_partner_by_bank_account')) {
+        function search_partner_by_bank_account($partnerType, $bankAccount) {
+            return [
+                'partner_id' => 1,
+                'partner_detail_id' => 1,
+                'partner_name' => 'Mock Partner',
+                'partner_ref' => 'MOCK001',
+            ];
+        }
+    }
+
 }
