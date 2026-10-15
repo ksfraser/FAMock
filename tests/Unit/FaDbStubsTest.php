@@ -24,9 +24,12 @@ final class FaDbStubsTest extends TestCase
         $this->assertSame('0_', TB_PREF);
     }
 
-    public function testDbEscapeAddsSlashes(): void
+    public function testDbEscapeAddsSlashesAndWrapsInQuotes(): void
     {
-        $this->assertSame("O\'Reilly", db_escape("O'Reilly"));
+        // FA's real db_escape() returns the value already quoted, so a module
+        // can call it bare: "WHERE name = " . db_escape($name).
+        $this->assertSame("'O\\'Reilly'", db_escape("O'Reilly"));
+        $this->assertSame("'plain'", db_escape('plain'));
     }
 
     public function testDbQueryInsertAndSelectCursorBehavior(): void

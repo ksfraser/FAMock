@@ -10,9 +10,13 @@ namespace {
 	$GLOBALS['__fa_result_set'] = [];
 	$GLOBALS['__fa_result_pos'] = [];
 
+	// FA-faithful: the real db_escape() returns the value ALREADY WRAPPED IN
+	// SINGLE QUOTES (includes/db/connect_db_mysqli.inc). Every module in this
+	// ecosystem calls it bare -- "WHERE x = " . db_escape($v) -- so a stub that
+	// returns only addslashes() yields unquoted, invalid SQL. Keep the quoting.
 	if (!function_exists('db_escape')) {
 		function db_escape(string $value): string {
-			return addslashes($value);
+			return "'" . addslashes($value) . "'";
 		}
 	}
 
