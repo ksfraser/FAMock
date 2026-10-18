@@ -253,20 +253,6 @@ namespace {
         }
     }
 
-    if (!function_exists('get_company_prefs')) {
-        function get_company_prefs(): array {
-            return [
-                'curr_default' => 'CAD',
-                'debtors_act' => '1100',
-                'default_sales_discount_act' => '4200',
-                'default_prompt_payment_act' => '4205',
-                'bank_charge_act' => '4500',
-                'exchange_diff_act' => '4505',
-                'freight_act' => '4600',
-                'default_credit_limit' => 1000.0,
-            ];
-        }
-    }
 
     if (!function_exists('get_company_currency')) {
         function get_company_currency(): string {
@@ -385,6 +371,26 @@ namespace {
         }
     }
 
+    /**
+     * get_company_pref() / get_company_prefs() are defined once, in
+     * FaConstantStubs.php, matching FA 2.4.3 admin/db/company_db.inc.
+     *
+     * The two versions that used to live here were both wrong in ways that
+     * mattered, and because this file loads before FaConstantStubs.php in
+     * FAMock.php order the get_company_prefs() one actually won:
+     *
+     *  - it returned a hard-coded CAD / 1100 / 4200 / 1000.0 array. FA has no
+     *    built-in preference defaults - it reads the sys_prefs table - so this
+     *    reported preferences that no test had ever set, which made "stored
+     *    nothing" and "stored a realistic value" indistinguishable, and hid
+     *    typos in preference names.
+     *  - get_company_pref() typed its parameter as string and returned '' for
+     *    an unknown key, where FA returns null. It was additionally dead code.
+     *
+     * A bootstrap that loads ONLY this file still gets the canonical set.
+     */
+    require_once __DIR__ . '/FaConstantStubs.php';
+
     if (!function_exists('get_branch_accounts')) {
         function get_branch_accounts(int $branchId): array {
             return [
@@ -396,20 +402,6 @@ namespace {
         }
     }
 
-    if (!function_exists('get_company_pref')) {
-        function get_company_pref(string $name): string {
-            $prefs = [
-                'debtors_act' => '1100',
-                'bank_charge_act' => '4500',
-                'exchange_diff_act' => '4505',
-                'default_sales_discount_act' => '4200',
-                'default_prompt_payment_act' => '4205',
-                'freight_act' => '4600',
-                'curr_default' => 'CAD',
-            ];
-            return $prefs[$name] ?? '';
-        }
-    }
 
     if (!function_exists('get_customer_habit')) {
         function get_customer_habit(int $customerId): array {

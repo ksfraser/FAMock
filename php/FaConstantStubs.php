@@ -178,15 +178,132 @@ namespace {
         define('MENU_INQUIRY', 'menu_inquiry');
     }
 
-    if (!function_exists('set_company_pref')) {
-        function set_company_pref(string $name, $value) {
-            $GLOBALS['__fa_company_prefs'][$name] = $value;
+    /**
+     * ---------------------------------------------------------------------
+     * Canonical company-preference stubs. Single definition site.
+     * ---------------------------------------------------------------------
+     *
+     * Why this file: three separate implementations of get_company_pref()
+     * (here, FaBusinessStubs.php, FaSessionStubs.php) and two of
+     * get_company_prefs() (FaBusinessStubs.php, FaUpdateOnlyStubs.php) once
+     * existed, each behind a function_exists() guard. Which one a dependent
+     * actually got was therefore decided by the require order inside
+     * FAMock.php rather than by intent: this file loads first, so its version
+     * silently won and the other three were unreachable dead code that still
+     * read as if they were the contract.
+     *
+     * Why here and not in a new file: dependents do not all go through
+     * FAMock.php. Many bootstraps require individual stub files, and this one
+     * is already in the set they load (FaDbStubs, FaBusinessStubs,
+     * FaConstantStubs, FaDateStubs, ... is the common pattern), so defining
+     * here fixes the semantics without asking any dependent to load a file it
+     * does not currently know about. FaBusinessStubs.php, FaSessionStubs.php
+     * and FaUpdateOnlyStubs.php now require this file instead of carrying their
+     * own copies.
+     *
+     * Semantics are taken from FA 2.4.3 admin/db/company_db.inc:
+     *
+     *   function get_company_pref($prefs = null)   // returns @$all[$prefs]
+     *   function get_company_prefs()                // return get_company_pref(null);
+     *
+     * Two consequences, both asserted by this package's own suite:
+     *
+     *  - An UNKNOWN preference returns null, not ''. FA does not coerce, and
+     *    silently substituting '' hides typos in preference names.
+     *  - get_company_prefs() returns exactly what has been stored. FA reads
+     *    these from the sys_prefs table and has NO built-in defaults; the
+     *    hard-coded CAD / 1100 / 4200 array that FaBusinessStubs.php returned
+     *    was invented here and reported preferences no test had ever set.
+     *
+     * To seed a preference in a test, call set_company_pref() or
+     * update_company_prefs() so the value is visible to the code under test.
+     *
+     * NOTE: $_test_company_prefs is deliberately NOT honoured here. The dead
+     * get_company_pref() in FaSessionStubs.php used to consult it, but because
+     * this file loads first that branch was unreachable, so no dependent can be
+     * relying on it via famock today. Re-introducing it would silently change
+     * behaviour for suites that seed that global and expect famock to ignore it
+     * (ksf_bank_import does exactly this).
+     */
+
+    /**
+     * The single backing store, merged from both historical globals.
+     *
+     * set_company_pref() wrote $GLOBALS['__fa_company_prefs'] while
+     * update_company_prefs() wrote $GLOBALS['__fa_prefs'], so a preference set
+     * one way was invisible to a read of the other. Both are now honoured on
+     * read, so the two paths finally agree.
+     *
+     * WRITES still go to __fa_company_prefs on purpose. That is the store the
+     * previously-winning implementation in this same file used, and dependents
+     * reset it by name between tests - ksf_bank_import's BankImportConfig
+     * tests do `global $__fa_company_prefs; $__fa_company_prefs = [];` in
+     * setUp. Writing to __fa_prefs instead would have silently broken every
+     * such reset and leaked preferences across test cases. __fa_prefs is read
+     * (and kept for compatibility) but never written, so no existing reset
+     * stops working.
+     */
+    if (!function_exists('__fa_mock_company_prefs')) {
+        function __fa_mock_company_prefs(): array {
+            $prefs = array();
+            if (isset($GLOBALS['__fa_company_prefs']) && is_array($GLOBALS['__fa_company_prefs'])) {
+                $prefs = $GLOBALS['__fa_company_prefs'];
+            }
+            if (isset($GLOBALS['__fa_prefs']) && is_array($GLOBALS['__fa_prefs'])) {
+                $prefs = $GLOBALS['__fa_prefs'] + $prefs;
+            }
+            return $prefs;
         }
     }
 
     if (!function_exists('get_company_pref')) {
-        function get_company_pref(string $name, $default = '') {
-            return $GLOBALS['__fa_company_prefs'][$name] ?? $default;
+        /**
+         * @param string|array|null $prefs Preference name, list of names, or null for all.
+         * @return mixed Stored value, selected subset, whole pref set, or null if not found.
+         */
+        function get_company_pref($prefs = null) {
+            $store = __fa_mock_company_prefs();
+
+            if (is_array($prefs)) {
+                $selected = array();
+                foreach ($prefs as $name) {
+                    $selected[$name] = isset($store[$name]) ? $store[$name] : null;
+                }
+                return $selected;
+            }
+            if ($prefs === null) {
+                return $store;
+            }
+            // FA returns @$all[$prefs], i.e. null for an unknown key.
+            return isset($store[$prefs]) ? $store[$prefs] : null;
         }
     }
+
+    if (!function_exists('get_company_prefs')) {
+        function get_company_prefs(): array {
+            return get_company_pref(null);
+        }
+    }
+
+    if (!function_exists('set_company_pref')) {
+        function set_company_pref(string $name, $value): void {
+            $GLOBALS['__fa_company_prefs'][$name] = $value;
+        }
+    }
+
+    if (!function_exists('update_company_prefs')) {
+        function update_company_prefs(array $prefs): void {
+            foreach ($prefs as $k => $v) {
+                $GLOBALS['__fa_company_prefs'][(string)$k] = $v;
+            }
+        }
+    }
+
+    /**
+     * DELIBERATE DIVERGENCE: real FA declares
+     * set_company_pref($pref, $category, $type, $length, $value). This stub
+     * keeps the two-argument form that every module in the ecosystem actually
+     * calls. Adopting FA's five-argument signature would break all of them at
+     * once, so the mismatch is documented here rather than silently "fixed".
+     */
 }

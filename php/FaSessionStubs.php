@@ -4,17 +4,13 @@ namespace {
     $GLOBALS['__fa_session_stubs_loaded'] = true;
 
     // Session/Company Functions
-    if (!function_exists('get_company_pref')) {
-        function get_company_pref($name) {
-            // Check for test-specific global first (backwards compatibility)
-            global $_test_company_prefs;
-            if (isset($_test_company_prefs)) {
-                return $_test_company_prefs[$name] ?? null;
-            }
-            // Mock - return default values
-            return null;
-        }
-    }
+    // get_company_pref() / get_company_prefs() / set_company_pref() are defined
+    // once, in FaConstantStubs.php, matching FA 2.4.3 admin/db/company_db.inc.
+    // The copy that used to live here was unreachable dead code (FAMock.php
+    // loads FaConstantStubs.php first), so it was never the behaviour any
+    // dependent actually received. Requiring the canonical file keeps a
+    // bootstrap that loads ONLY this file working, with FA-faithful semantics.
+    require_once __DIR__ . '/FaConstantStubs.php';
 
     // Mock session for testing
     if (!isset($_SESSION)) {
