@@ -147,6 +147,12 @@ final class FaWriteStubsTest extends TestCase
         $this->assertSame(1234.56, user_numeric('1,234.56'));
     }
 
+    public function testNumberFormat2UsesUserDisplayPrecision(): void
+    {
+        $this->assertSame('1,234.56', number_format2(1234.56));
+        $this->assertSame('777', number_format2(777, 0));
+    }
+
     public function testSupplierLookupProvidesPayableAccount(): void
     {
         $supplier = get_supplier(7);

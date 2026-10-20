@@ -121,6 +121,13 @@ namespace {
     }
 
     // Notification Functions
+    if (!function_exists('number_format2')) {
+        function number_format2($number, $dec = -1, $decensep = '') {
+            // Formatted like FA's user-preference display (2 decimals).
+            return number_format($number, $dec === -1 ? 2 : $dec, '.', ',');
+        }
+    }
+
     if (!function_exists('display_notification')) {
         function display_notification($message) {
             // In tests, we'll collect notifications instead of outputting them
