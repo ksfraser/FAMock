@@ -9,4 +9,5 @@ return array(
     '6124b4c8570aa390c21fafd04a26c69f' => $vendorDir . '/myclabs/deep-copy/src/DeepCopy/deep_copy.php',
     'ec07570ca5a812141189b1fa81503674' => $vendorDir . '/phpunit/phpunit/src/Framework/Assert/Functions.php',
     '55dcfa9b64ca63cfb74225e6d0350f4d' => $baseDir . '/php/FAMock.php',
+    '413ae3e1c32769a0cb49e2ed25b38759' => $baseDir . '/php/TestDbResult.php',
 );

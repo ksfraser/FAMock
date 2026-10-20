@@ -79,8 +79,7 @@ namespace {
                     'type' => $type,
                     'description' => 'Test Quick Entry 1',
                     'base_desc' => 'Test Base Description 1',
-                    'base_amount' => 100.00
-                ],
+                    'base_amount' => 100.00                ],
                 [
                     'id' => 2,
                     'type' => $type,
@@ -525,6 +524,50 @@ namespace {
                 'bank_amount' => 100.00,
                 'curr_code' => 'CAD',
             ];
+        }
+    }
+
+    // Supplier lookup used by the payment/refund write paths
+    if (!function_exists('get_supplier')) {
+        function get_supplier($supplier_id) {
+            $suppliers = [
+                [
+                    'supplier_id' => 1,
+                    'supp_name' => 'Test Supplier 1',
+                    'supp_ref' => 'SUP001',
+                    'payable_account' => '2100',
+                    'dimension_id' => 0,
+                    'dimension2_id' => 0,
+                    'curr_code' => 'USD',
+                    'inactive' => 0,
+                ], [
+                    'supplier_id' => 2,
+                    'supp_name' => 'Test Supplier 2',
+                    'supp_ref' => 'SUP002',
+                    'payable_account' => '2100',
+                    'dimension_id' => 0,
+                    'dimension2_id' => 0,
+                    'curr_code' => 'CAD',
+                    'inactive' => 0,
+                ], [
+                    'supplier_id' => 7,
+                    'supp_name' => 'Referenced Supplier',
+                    'supp_ref' => 'SUP007',
+                    'payable_account' => '2100',
+                    'dimension_id' => 0,
+                    'dimension2_id' => 0,
+                    'curr_code' => 'CAD',
+                    'inactive' => 0,
+                ],
+            ];
+
+            foreach ($suppliers as $supplier) {
+                if ($supplier['supplier_id'] == $supplier_id) {
+                    return $supplier;
+                }
+            }
+
+            return null;
         }
     }
 }

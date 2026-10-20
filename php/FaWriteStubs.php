@@ -63,10 +63,14 @@ namespace {
         {
             __fa_write_log(__FUNCTION__, [$trans_no, $trans_type]);
 
+            // FA's original walks the result set as a list of rows (one
+            // counterparty per transaction), so consumers foreach over it.
             return [
-                'person_id' => 10,
-                'person_type' => 'supplier',
-                'person_type_id' => 3,
+                [
+                    'person_id' => 10,
+                    'person_type' => 'supplier',
+                    'person_type_id' => 3,
+                ],
             ];
         }
     }
@@ -74,14 +78,14 @@ namespace {
     if (!function_exists('update_transactions')) {
         function update_transactions(
             int $transaction_id,
-            string $collection_ids,
-            int $status,
-            ?int $trans_no,
-            ?int $trans_type,
-            bool $matched,
-            bool $created,
-            ?string $partner_code,
-            ?int $partner_id
+            $collection_ids,
+            $status,
+            $trans_no = null,
+            $trans_type = null,
+            $matched = false,
+            $created = false,
+            $partner_code = null,
+            $partner_id = null
         ): bool {
             __fa_write_log(__FUNCTION__, func_get_args());
 
@@ -217,6 +221,11 @@ namespace {
                 $this->gl_items[] = $item;
 
                 return $item;
+            }
+
+            public function count_gl_items(): int
+            {
+                return count($this->gl_items);
             }
 
             public function gl_items_total(): float

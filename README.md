@@ -94,7 +94,8 @@ This will load all FA function stubs.
 - `my_write_customer_payment()` - Returns payment id 666
 - `add_cust_allocation()`, `update_debtor_trans_allocation()` - Allocation pass-throughs
 - `update_transactions()`, `set_bank_partner_data()`, `set_partner_data()`, `update_partner_data()` - Module-side state writers
-- `get_trans_counterparty()` - Returns a person row
+- `get_trans_counterparty()` - Returns a list with one person row
+- `get_supplier()` - Supplier lookup with `payable_account` / dimensions
 - `user_numeric()`, `end_fiscalyear()` - Format / fiscal helpers
 - `items_cart` class - GL item accumulator (`add_gl_item()`, `gl_items_total()`)
 - `_Refs` class + global `$Refs` - Document reference numbering (`get_next()`)

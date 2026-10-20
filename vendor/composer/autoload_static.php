@@ -10,6 +10,7 @@ class ComposerStaticInit0210e96fbe8eeb515eb67c2057c4cc61
         '6124b4c8570aa390c21fafd04a26c69f' => __DIR__ . '/..' . '/myclabs/deep-copy/src/DeepCopy/deep_copy.php',
         'ec07570ca5a812141189b1fa81503674' => __DIR__ . '/..' . '/phpunit/phpunit/src/Framework/Assert/Functions.php',
         '55dcfa9b64ca63cfb74225e6d0350f4d' => __DIR__ . '/../..' . '/php/FAMock.php',
+        '413ae3e1c32769a0cb49e2ed25b38759' => __DIR__ . '/../..' . '/php/TestDbResult.php',
     );
 
     public static $prefixLengthsPsr4 = array (

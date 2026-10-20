@@ -105,13 +105,14 @@ final class FaWriteStubsTest extends TestCase
         $this->assertSame([42, '1', 1, 777, 1, true, false, 'QE', 7], $call);
     }
 
-    public function testCounterpartyLookupReturnsPersonRow(): void
+    public function testCounterpartyLookupReturnsListShape(): void
     {
-        $row = get_trans_counterparty(88, 22);
+        $rows = get_trans_counterparty(88, 22);
 
-        $this->assertSame(10, $row['person_id']);
-        $this->assertSame('supplier', $row['person_type']);
-        $this->assertSame(3, $row['person_type_id']);
+        // FA-faithful: a list of rows so foreach consumers (e.g. matching) work
+        $this->assertSame(10, $rows[0]['person_id']);
+        $this->assertSame('supplier', $rows[0]['person_type']);
+        $this->assertSame(3, $rows[0]['person_type_id']);
     }
 
     public function testThrowableFlagDrivesErrorPaths(): void
@@ -144,5 +145,14 @@ final class FaWriteStubsTest extends TestCase
     {
         $this->assertSame(125.5, user_numeric('125.50'));
         $this->assertSame(1234.56, user_numeric('1,234.56'));
+    }
+
+    public function testSupplierLookupProvidesPayableAccount(): void
+    {
+        $supplier = get_supplier(7);
+
+        $this->assertSame('Referenced Supplier', $supplier['supp_name']);
+        $this->assertSame('2100', $supplier['payable_account']);
+        $this->assertNull(get_supplier(9999));
     }
 }
