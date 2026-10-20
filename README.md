@@ -87,6 +87,21 @@ This will load all FA function stubs.
 - `get_company_prefs()` - Get mock preferences
 - `update_company_prefs()` - Update mock preferences
 
+### Transaction Write Functions (`FaWriteStubs.php`)
+- `write_bank_transaction()` - Returns `[4, 777]` (ST_BANKTRANSFER, trans #777)
+- `qe_to_cart()` - Loads a Quick Entry amount into an `items_cart`
+- `write_supp_payment()` - Returns payment id 555
+- `my_write_customer_payment()` - Returns payment id 666
+- `add_cust_allocation()`, `update_debtor_trans_allocation()` - Allocation pass-throughs
+- `update_transactions()`, `set_bank_partner_data()`, `set_partner_data()`, `update_partner_data()` - Module-side state writers
+- `get_trans_counterparty()` - Returns a person row
+- `user_numeric()`, `end_fiscalyear()` - Format / fiscal helpers
+- `items_cart` class - GL item accumulator (`add_gl_item()`, `gl_items_total()`)
+- `_Refs` class + global `$Refs` - Document reference numbering (`get_next()`)
+- Every write is recorded in `$GLOBALS['__fa_write_log']`; set
+  `$GLOBALS['__fa_write_throwable'][$fn] = 'message'` to make an individual
+  stub throw so error paths can be driven without replacing the stub.
+
 ## Mock Classes
 
 - `Ksfraser\FAMock\MockDatabase` - PHPUnit mock implementing DatabaseInterface

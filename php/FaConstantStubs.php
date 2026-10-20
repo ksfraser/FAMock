@@ -40,6 +40,10 @@ namespace {
         define('PT_BRANCH', 'BR');               // Type 'BR' = Customer Branch
     }
 
+    if (!defined('PT_QUICKENTRY')) {
+        define('PT_QUICKENTRY', 'Q');            // Type 'Q' = Quick Entry
+    }
+
     // ==========================================
     // TRANSACTION TYPES AND STATUS CODES
     // ==========================================
