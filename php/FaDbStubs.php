@@ -67,6 +67,26 @@ namespace {
 			// For SELECT and other queries we don't explicitly emulate, reset any cached
 			// cursor state so repeated queries behave like fresh result resources.
 			if (stripos($sql, 'SELECT') === 0) {
+				// Chart of accounts lookup. Modules validate GL account codes
+				// with SELECT COUNT(*) FROM {TB_PREF}chart_master WHERE
+				// account_code = '<code>'. The test chart is seeded through
+				// $GLOBALS['__fa_chart_accounts'] (array of existing codes);
+				// default is an empty chart, so every account is rejected
+				// unless the fixture seeds it.
+				if (preg_match('/chart_master/i', $sql)) {
+					$escaped = '';
+					if (preg_match('/account_code\s*=\s*\'([^\']*)\'/i', $sql, $m)) {
+						$escaped = stripslashes($m[1]);
+					}
+
+					$allowed = (array) ($GLOBALS['__fa_chart_accounts'] ?? []);
+					$count = in_array($escaped, $allowed, true) ? 1 : 0;
+
+					$GLOBALS['__fa_result_set'][$sql] = [['count' => $count]];
+					$GLOBALS['__fa_result_pos'][$sql] = 0;
+					return $sql;
+				}
+
 				if (stripos($sql, 'FROM test_table') !== false) {
 					$GLOBALS['__fa_result_set'][$sql] = [
 						['id' => 1, 'name' => 'Test Item'],
