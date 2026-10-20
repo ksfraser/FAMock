@@ -25,11 +25,13 @@ namespace {
     // PARTNER TYPES (gl_account dimensioning)
     // ==========================================
     if (!defined('PT_CUSTOMER')) {
-        define('PT_CUSTOMER', 'C');              // Type 'C' = Customer/Debtor
+        // KSF family contract: matches fa_stubs.php in the consuming modules -
+        // the counterparty person_type column stores the full word.
+        define('PT_CUSTOMER', 'customer');       // Customer/Debtor person type
     }
 
     if (!defined('PT_SUPPLIER')) {
-        define('PT_SUPPLIER', 'S');              // Type 'S' = Supplier/Creditor
+        define('PT_SUPPLIER', 'supplier');       // Supplier/Creditor person type
     }
 
     if (!defined('PT_BANK')) {
@@ -113,7 +115,7 @@ namespace {
 
     // Purchasing transactions
     if (!defined('ST_SUPPINVOICE')) {
-        define('ST_SUPPINVOICE', 25);            // 25 = Supplier Invoice
+        define('ST_SUPPINVOICE', 20);            // 20 = Supplier Invoice
     }
 
     if (!defined('ST_SUPPCREDIT')) {
@@ -121,7 +123,7 @@ namespace {
     }
 
     if (!defined('ST_SUPPAYMENT')) {
-        define('ST_SUPPAYMENT', 27);             // 27 = Supplier Payment
+        define('ST_SUPPAYMENT', 22);             // 22 = Supplier Payment
     }
 
     if (!defined('ST_SUPPRECEIVE')) {
@@ -167,7 +169,7 @@ namespace {
     }
 
     if (!defined('ANY_NUMERIC')) {
-        define('ANY_NUMERIC', 0);                 // Generic numeric placeholder
+        define('ANY_NUMERIC', -1);                // Generic numeric placeholder
     }
 
     if (!defined('MENU_IMPORT')) {

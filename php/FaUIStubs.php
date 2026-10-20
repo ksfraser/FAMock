@@ -17,14 +17,15 @@ namespace {
     }
 
     if (!function_exists('start_table')) {
-        function start_table($class = '') {
-            echo '<table class="' . $class . '">';
+        function start_table($class = '', $params = '') {
+            // FA-family faithful: fallback to tablestyle2, honor params.
+            echo "<table class='" . ($class ?: 'tablestyle2') . "' $params>\n";
         }
     }
 
     if (!function_exists('end_table')) {
         function end_table($colspan = 1) {
-            echo '</table>';
+            echo "</table>\n";
         }
     }
 
@@ -258,9 +259,9 @@ namespace {
     }
 
     if (!function_exists('label_row')) {
-        function label_row(string $label, $value, string $params = ''): void {
-            // Mock - output basic HTML structure
-            echo "<tr><td class='label'>$label</td><td>$value</td></tr>";
+        function label_row($label, $value, $params = ''): void {
+            // FA-family faithful: render caller params inside the value cell.
+            echo "<tr><td class='label'>" . $label . "</td><td " . $params . ">" . $value . "</td></tr>";
         }
     }
 
