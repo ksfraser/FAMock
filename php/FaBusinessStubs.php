@@ -527,7 +527,58 @@ namespace {
         }
     }
 
-    // Supplier lookup used by the payment/refund write paths
+    if (!function_exists('get_users')) {
+    $GLOBALS['__fa_users'] = array(
+        array('id' => 1, 'user_id' => 'admin',   'role_id' => 1, 'inactive' => 0),
+        array('id' => 2, 'user_id' => 'kevin',   'role_id' => 2, 'inactive' => 0),
+        array('id' => 3, 'user_id' => 'sue',     'role_id' => 2, 'inactive' => 1),
+    );
+
+    /**
+     * Return the seeded user list as an ArrayIterator (db_query-faithful result).
+     *
+     * @param bool $all When false, inactive users are excluded.
+     * @return \ArrayIterator
+     */
+    function get_users($all = false)
+    {
+        global $__fa_users;
+        $users = array();
+
+        foreach ($__fa_users as $user) {
+            if (!$all && !empty($user['inactive'])) {
+                continue;
+            }
+            $users[] = $user;
+        }
+
+        return new \ArrayIterator($users);
+    }
+}
+
+if (!function_exists('get_user')) {
+    /**
+     * Return one seeded user row by id or user_id, or null.
+     *
+     * @param mixed $id User id or user_id
+     * @return array|null
+     */
+    function get_user($id)
+    {
+        global $__fa_users;
+
+        foreach ($__fa_users as $user) {
+            if ((int) $user['id'] === (int) $id || $user['user_id'] === $id) {
+                return $user;
+            }
+        }
+
+        return null;
+    }
+}
+
+// Supplier lookup used by the payment/refund write paths
+
     if (!function_exists('get_supplier')) {
         function get_supplier($supplier_id) {
             $suppliers = [
